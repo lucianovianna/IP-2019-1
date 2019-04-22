@@ -15,7 +15,7 @@ int main()
 	int n, i, j;
 	scanf("%lf%ld", &x, &n);
 
-	for(i = 0; i < n; i++ )
+	for(i = 0; i <= n; i++ )
 	{
 		z = z + ( ( pow(-1.0 , i) * pow(x, (2.0*i)) ) / (fat(2*i)) ); 
 		//printf("\n\t%ld", fat(2*i)); //debug
