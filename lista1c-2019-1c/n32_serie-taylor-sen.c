@@ -17,11 +17,11 @@ int main()
 
 	for(i = 0; i <= n; i++ )
 	{
-		z = z + ( ( pow(-1.0 , i) * pow(x, (2.0*i)) ) / (fat(2*i)) ); 
+		z = z + ( ( pow(-1.0 , i) * pow(x, (2.0*i+1)) ) / (fat(2*i+1)) ); 
 		//printf("\n\t%ld", fat(2*i)); //debug
 	}
 
-		printf("cos(%.2lf) = %.6lf\n", x, z );
+		printf("seno(%.2lf) = %.6lf\n", x, z );
 	
 	return 0;
 }
