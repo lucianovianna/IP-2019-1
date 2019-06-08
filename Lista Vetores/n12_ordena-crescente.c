@@ -20,10 +20,10 @@ void insertion(int n, int *v){
 
 int main(){
 	
-	int n;
+	int n, i;
 	scanf("%d", &n);
 	int v[n];
-	for(int i=0; i<n; i++){
+	for(i=0; i<n; i++){
 		scanf("%d", &v[i]);
 	}
 	insertion(n, v);	
