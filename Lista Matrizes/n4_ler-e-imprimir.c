@@ -5,28 +5,27 @@ int main(){
 
 	int n, m, i ,j;
 	do{
-	scanf("%d", &n);
-	} while(n <= 0 || n >= 10);
-	do{
 	scanf("%d", &m);
-	} while(m <= 0 || m >= 10);
+	} while(m <= 0 || m > 10);
+	do{
+	scanf("%d", &n);
+	} while(n <= 0 || n > 10);
 	
-	int M[n][m];
+	int M[m][n];
 	
-	for(i=1; i<=n; i++){
-		for(j=1; j<=m; j++)
+	for(i=0; i<m; i++){
+		for(j=0; j<n; j++)
 			scanf("%d", &M[i][j]);
 	}
 	
-	for(i=1; i<=n; i++){
-		printf("linha %d: ", i);
-		for(j=1; j<=m; j++){
+	for(i=0; i<m; i++){
+		printf("linha %d: ", i+1);
+		for(j=0; j<n; j++){
 			printf("%d", M[i][j]);
 			
-			if(j != m)
+			if(j != n-1)
 				printf(",");
 		}
-		
 		printf("\n");
 	}
 	
