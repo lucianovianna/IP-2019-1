@@ -1,1 +1,1 @@
-Learning C
+Learning C, and sometimes, C++
