@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include <string.h>
+#include <locale.h>
 
 
-char turma[111], diretorio[333], situacao[44];
+char turma[111], diretorio[333], situacao[44]; // variaveis criadas em escopo global
 
 
 struct Materia{
@@ -16,21 +16,26 @@ struct Materia{
 };
 struct Materia ip;
 
-
+//Funcao para ler o nome e o diretorio do arquivo
 void directory(){
 
-	puts("Digite o nome da turma:");
+	puts("Digite o nome da turma (Digite 'fim' para sair):");
 	getchar();
 	scanf("%[^\n]", turma);
-	//const char *turmaF = turma;
-	
-	puts("Digite o diretório onde quer salvar o arquivo:");
+	if( (strcmp(turma, "fim")) == 0)
+	{
+		int fcloseall();
+		exit(main());
+	} 
+
+	puts("Digite o diretório do arquivo:");
+	getchar();
 	scanf("%[^\n]", diretorio);
-	char *diretorio2 = strcat(diretorio, "/");
-	diretorio = strcat(diretorio2, turma);
+	strcat(diretorio, "/");
+	strcat(diretorio, turma);
 }
 
-
+//Funcao para descobrir a situacao de um aluno
 void passaste(double nf, int faltas){
 
 	if(nf >= 6 && faltas < 32)
@@ -60,7 +65,7 @@ void cadastro(){
 	
 	while(1)
 	{
-		puts("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");	
+		puts("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");	
 		puts("Cadastrando um(a) aluno(a)...");
 		
 		puts("Digite a matricula (digite '0' para cancelar o cadastro):");
@@ -104,74 +109,55 @@ void cadastro(){
 }
 
 
-
-
-
 void consulta(){
 
-	long int bmatric=-1;
+	directory();
 
+	const char *diretorioF = diretorio;
+	FILE *arquivo;
+	arquivo = fopen(diretorioF, "rb");
+	if(arquivo == NULL)
+	{
+		puts("Arquivo inexistente ou diretório incorreto!");
+		int fcloseall();
+		consulta();
+	}
+	
 	while(1)
 	{
-
-		puts("Digite 'fim' para sair.");
-		directory();
-		const char *diretorioF = diretorio;
-		if( (strcmp(turma, "fim")) == 0)
+		long int bmatric=-1;
+		puts("\nDigite '0' para sair.\nDigite a matricula do aluno que deseja buscar:");
+		scanf("%ld", &bmatric);
+		if(bmatric == 0)
 		{
 			int fcloseall();
-			main();
+			exit(main());
 		}
-		
-
-		FILE *arquivo;
-		arquivo = fopen(diretorioF, "rb");
-		if(arquivo == NULL)
+		fseek(arquivo, 0, SEEK_SET);
+		while (fread (&ip, sizeof(ip), 1, arquivo))
 		{
-			puts("Arquivo inexistente!");
-			consulta();
-		}
-		
-		while(1)
-		{
-			puts("\nDigite '0' para sair.\nDigite a matricula do aluno que deseja buscar:");
-			scanf("%ld", &bmatric);
-			if(bmatric == 0)
+			if(ip.matric == bmatric)
 			{
-				int fcloseall();
-				main();
-			}
-
-			while (fread (&ip, sizeof(ip), 1, arquivo))
-			{
-				if(ip.matric == bmatric)
+				puts("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+				printf("Turma: %s\n", turma);
+				printf("Matricula: %ld\n", ip.matric);
+				printf("Nome: %s\n", ip.nome);
+				for (int i = 0; i < 6; ++i)
 				{
-					puts("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-					printf("Turma: %s\n", turma);
-					printf("Matricula: %ld\n", ip.matric);
-					printf("Nome: %s\n", ip.nome);
-					for (int i = 0; i < 6; ++i)
-					{
-						printf("Nota da prova %d: %.2lf\n", i+1, ip.np[i]);
-					}
-					for (int i = 0; i < 6; ++i)
-					{
-						printf("Nota da lista %d: %.2lf\n", i+1, ip.nl[i]);
-					}
-					printf("Nota do Trabalho Final: %.2lf\n", ip.nt);
-					printf("Nota final: %.2lf\n", ip.nf);
-					printf("Numero de ausências: %d\n", ip.faltas);
-					printf("Situação: %s\n", ip.situation);
-					puts("\n\n");
-
-
+					printf("Nota da prova %d: %.2lf\n", i+1, ip.np[i]);
 				}
-				else 
-					continue;
+				for (int i = 0; i < 6; ++i)
+				{
+					printf("Nota da lista %d: %.2lf\n", i+1, ip.nl[i]);
+				}
+				printf("Nota do Trabalho Final: %.2lf\n", ip.nt);
+				printf("Nota final: %.2lf\n", ip.nf);
+				printf("Numero de ausências: %d\n", ip.faltas);
+				printf("Situação: %s\n\n", ip.situation);
 			}
 		}
-		int fcloseall();
 	}
+	int fcloseall();
 }
 
 
@@ -179,23 +165,16 @@ void listagem(){
 
 	while(1) 
 	{
-
-		puts("Digite 'fim' para sair.");
 		directory();
+		
 		const char *diretorioF = diretorio;
-		if( (strcmp(turma, "fim")) == 0) 
-		{
-			int fcloseall();
-			main();
-		}
-
 		FILE *arquivo;
 		arquivo = fopen(diretorioF, "rb");
 		if(arquivo == NULL)
 		{
-			puts("Arquivo inexistente!\n");
+			puts("Arquivo inexistente ou diretório incorreto!\n");
 			int fcloseall();
-			listagem();
+			continue;
 		}
 
 		puts("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -215,8 +194,7 @@ void listagem(){
 			printf("Nota do Trabalho Final: %.2lf\n", ip.nt);
 			printf("Nota final: %.2lf\n", ip.nf);
 			printf("Numero de ausências: %d\n", ip.faltas);
-			printf("Situação: %s\n", ip.situation);
-			puts("\n");
+			printf("Situação: %s\n\n", ip.situation);
 		}
 
 		fclose(arquivo);
@@ -230,22 +208,14 @@ void alteracao(){
 
 	while(1)
 	{
-
-		puts("Digite 'fim' para sair.");
 		directory();
-		const char *diretorioF = diretorio;
-		if( (strcmp(turma, "fim")) == 0)
-		{
-			int fcloseall();
-			main();
-		}
-		
 
+		const char *diretorioF = diretorio;
 		FILE *arquivo;
 		arquivo = fopen(diretorioF, "r+b");
 		if(arquivo == NULL)
 		{
-			puts("Arquivo inexistente!");
+			puts("Arquivo inexistente ou diretório incorreto!");
 			alteracao();
 		}
 		
@@ -256,7 +226,7 @@ void alteracao(){
 			if(bmatric == 0)
 			{
 				int fcloseall();
-				main();
+				exit(main());
 			}
 
 			while (fread (&ip, sizeof(ip), 1, arquivo))
@@ -279,9 +249,13 @@ void alteracao(){
 					printf("Nota final: %.2lf\n", ip.nf);
 					printf("Numero de ausências: %d\n", ip.faltas);
 					printf("Situação: %s\n", ip.situation);
-					puts("\n\n");
+					puts("\n");
 
 					puts("Entre com os novos dados:\n");
+					
+					puts("Nome do aluno:");
+					getchar(), scanf("%[^\n]", ip.nome);
+
 					double ml=0, mp=0;
 					for (int i = 0; i < 6; ++i)
 					{
@@ -309,6 +283,7 @@ void alteracao(){
 
 					fseek(arquivo, -(sizeof(ip)), SEEK_CUR);
 					fwrite(&ip, sizeof(ip), 1, arquivo);
+					int fcloseall();
 				}
 				else 
 					continue;
@@ -316,17 +291,18 @@ void alteracao(){
 		}
 		int fcloseall();
 	}
+	int fcloseall();
 }
 
 
 int main(){
 	setlocale(LC_ALL, "Portuguese");
 
-	int token=-1;
-	do
+	while(1)
 	{
-		puts("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-		puts("Welcome!");
+		int token=-1;
+		puts("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		puts("Welcome!\nDigite:");
 		puts("1 para Cadastrar uma turma");
 		puts("2 para Consultar um aluno");
 		puts("3 para Alterar dados de um aluno");
@@ -339,9 +315,8 @@ int main(){
 		if(token == 2) consulta();
 		if(token == 3) alteracao();
 		if(token == 4) listagem();
-			
-	} while(token != 5);
+		if(token == 5) exit(0);	
+	}
 	
-	return 0;
+	exit(0);
 }
-
