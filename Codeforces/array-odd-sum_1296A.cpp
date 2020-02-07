@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+// https://codeforces.com/contest/1296/problem/A
 
 int main()
 {
