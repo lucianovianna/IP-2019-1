@@ -2,38 +2,37 @@
 using namespace std;
 // https://www.urionlinejudge.com.br/judge/pt/problems/view/1110
 
-int main() {
-	int n;
 
-	while(true) {
-		list <int> pilha, descartados;
-		cin >> n;
-		if(n == 0) break;
+int main()
+{
+    // // Desativa a sincronização dos fluxos padrões C e C++;
+    ios_base::sync_with_stdio( false ); 
+    // // Esvazia o cout antes que o cin aceite uma entrada;
+    cin.tie( NULL );
 
-		for (int i = 1; i <= n; ++i) {
-			pilha.push_back(i);
-		}
+    int n;
+    while(cin >> n, n)
+    {
+    	deque<int> pilha;
 
-		while(pilha.size() >= 2) {
-			descartados.push_back(pilha.front());
+    	for (int i = 1; i <= n; i++) pilha.push_back(i);
 
-			pilha.pop_front();
-			pilha.push_back(pilha.front());
-			pilha.pop_front();
-		}
+    	cout << "Discarded cards: ";
+    	while(pilha.size() != 1)
+    	{
+    		cout << pilha.front();
+    		if(pilha.size() > 2) cout << ", ";
 
-		cout << "Discarded cards: ";
+    		pilha.pop_front();
+    		pilha.push_back(pilha.front());
+    		pilha.pop_front();
+    	}
 
-		while(descartados.size()) {
-			cout << descartados.front();
 
-			if(descartados.size() > 1) cout << ", ";
+    	cout << endl << "Remaining card: " << pilha.front() << endl;
+    	pilha.clear();
+    }
 
-			descartados.pop_front();
-		}
 
-		cout << endl << "Remaining card: " << pilha.front() << endl; 
-	}
-	return 0;
+    return 0;
 }
-
