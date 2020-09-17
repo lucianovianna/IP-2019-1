@@ -17,19 +17,16 @@ int main()
 
 	for (i = 0; i < n; ++i)
 	{
+		int token = 0;
 		for (j = 0; j < n; ++j)
 		{
-			printf("i: %d j: %d v[i]: %d  v[j]%d\n", i, j, vetor[i], vetor[j]);
-			if(j == i) continue;
 
-			if(i != n-1 && vetor[i] == vetor[j]) {
-				printf("repitido\n");
+			if(vetor[i] == vetor[j]) token++;
+
+			if(token == 2) {
 				break;
 			}
-			else if(j == n-1) 
-			{
-				printf("unico\n");
-				// printf("\n%d\n", vetor[i]);
+			else if(j == n-1) {
 				count++;
 			}
 		}
