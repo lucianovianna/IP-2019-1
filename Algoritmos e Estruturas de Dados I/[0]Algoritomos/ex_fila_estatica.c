@@ -16,7 +16,7 @@ void criarFilaVazia(Fila *F)
 {
 	F->tamanho = 0;
 	F->inicio = 0;
-	F->fim = 0
+	F->fim = 0;
 }
 
 int verificaFilaVazia(Fila F)
@@ -57,12 +57,14 @@ void desenfileirar(Fila *F, Elemento *X)
 
 void exibirElemento(Elemento X)
 {
-	printf("\nCHAVE = %d ***\n", X.chave);
-	printf("NOME = %s\n\n", X.nome);
+	printf("-------------------\n");
+	printf("\n CHAVE = %d\n", X.chave);
+	printf(" NOME = %s\n", X.nome);
 }
 
 void exibirFila(Fila F)
 {
+	Elemento E;
 	Fila fa;
 	fa = F;
 
@@ -89,12 +91,24 @@ Elemento buscaElemento(Fila F, int ch)
 		if(ch == E.chave) {
 			return E;
 		}
+	}
 
 		printf("Elemento chave = %d nao esta na fila\n", E.chave);
 
 		E.chave = 0;
 		return E;
-	}
+	
+}
+
+void Menu()
+{
+	printf("---------------------------------\n");
+	printf("1 - Novo cadastro\n");
+	printf("2 - Exibir fila\n");
+	printf("3 - Buscar elemento na fila\n");
+	printf("4 - Remover o proximo da fila\n");
+	printf("7 - Sair do programa\n");
+	printf("---------------------------------\n");
 }
 
 
@@ -113,7 +127,27 @@ int main()
 
 		switch(op)
 		{
+			case 1:
+				printf("Entre com a chave: ");
+				scanf("%d", &E.chave);
+				getchar();
+				printf("Entre com o nome\n:");
+				fgets(E.nome, 40, stdin);
 
+				enfileirar(&F, E);
+				break;
+			case 2:
+				exibirFila(F);
+				break;
+			case 3:
+				printf("Insira a chave do elemento q deseja buscaR:");
+				int tmp; 
+				scanf("%d", &tmp);
+				buscaElemento(F, tmp);
+				break;
+			case 4:
+				desenfileirar(&F, &E);
+				break;
 
 			default: printf("ENTRE COM A OPCAO CORRETA\n");   
 				break; 
