@@ -36,43 +36,42 @@ void enfileirar(Fila *F, Elemento X)
 	}
 	else 
 	{
-		F->elem[F->fim];
+		F->elem[F->fim] = X;
 		F->fim = (F->fim+1) % MAX;
 		F->tamanho++;
 	}
 }
 
-void desenfileirar(Fila *F, Elemento *X)
+void desenfileirar(Fila *F)
 {
 	if(verificaFilaVazia(*F)) {
 		printf("A FILA ESTA VAZIA - desenfileirar\n");
 	}
 	else 
 	{
-		*X = F->elem[F->inicio];
-		F->tamanho;
+		// *X = F->elem[F->inicio];
+		F->tamanho--;
 		F->inicio = (F->inicio+1) % MAX;
 	}
 }
 
 void exibirElemento(Elemento X)
 {
-	printf("-------------------\n");
+	printf("-----------------------\n");
 	printf("\n CHAVE = %d\n", X.chave);
 	printf(" NOME = %s\n", X.nome);
 }
 
 void exibirFila(Fila F)
 {
-	Elemento E;
 	Fila fa;
 	fa = F;
 
 	printf("_____ INICIO DA FILA _____\n");
 	while(!verificaFilaVazia(fa))
 	{
-		desenfileirar(&fa, &E);
-		exibirElemento(E);
+		exibirElemento(fa.elem[fa.inicio]);
+		desenfileirar(&fa);
 	}
 	printf("_____  FIM DA FILA  _____\n");
 }
@@ -81,21 +80,25 @@ void exibirFila(Fila F)
 
 Elemento buscaElemento(Fila F, int ch)
 {
-	Elemento E;
+	// Elemento E;
 	Fila fa;
 
 	fa = F;
 	while(!verificaFilaVazia(fa))
 	{
-		desenfileirar(&fa, &E);
-		if(ch == E.chave) {
-			return E;
-		}
+		// desenfileirar(&fa, &E);
+		desenfileirar(&fa);
+		// if(ch == E.chave) {
+		// 	return E;
+		// }
+		if(ch == fa.elem[fa.inicio].chave) 
+			return fa.elem[fa.inicio];
 	}
 
-		printf("Elemento chave = %d nao esta na fila\n", E.chave);
+		printf("\nElemento com chave = %d nao esta na fila\n", ch);
 
-		E.chave = 0;
+		Elemento E;
+		E.chave = -1;
 		return E;
 	
 }
@@ -140,19 +143,20 @@ int main()
 				exibirFila(F);
 				break;
 			case 3:
-				printf("Insira a chave do elemento q deseja buscaR:");
+				printf("Insira a chave do elemento q deseja buscar: ");
 				int tmp; 
 				scanf("%d", &tmp);
-				buscaElemento(F, tmp);
+				E = buscaElemento(F, tmp);
+				if(E.chave != -1) exibirElemento(E); 
 				break;
 			case 4:
-				desenfileirar(&F, &E);
+				desenfileirar(&F);
 				break;
 
 			default: printf("ENTRE COM A OPCAO CORRETA\n");   
 				break; 
 
-			case 7: printf("OBRIGADO POR UTILIZAR NOSSO SISTEMA\n");
+			case 7: printf("OBRIGADO POR UTILIZAR O NOSSO SISTEMA\n");
 				break;
 		}
 

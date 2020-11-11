@@ -1,35 +1,33 @@
 #include <stdio.h>
 
-#define N 5
+#include <stdlib.h>
+
 
 int main() {
-  int mat[N][N], i, j, x, lin;
-  for (i = 0; i < N; i++)
-    for (j = 0; j < N; j++)
-      scanf("%d", & mat[i][j]);
+  int i, j, x, N;
 
-  printf("Entre com um valor a ser consultado\n");
+  scanf("%d", &N);
+  int vet[N];
+  
+  for(i = 0; i < N; i++)
+    scanf("%d", &vet[i]);
 
-  scanf("%d", & x);
+
+  for (i = 0; i < N - 1; i++)
+    printf("%d ", vet[i]);
+  printf("%d\n\n", vet[i]);
+  
+  printf("Entre com um valor que deseja buscar no vetor:\n");
+  scanf("%d", &x);
 
   i = 0;
-  while (i < N) {
-    j = 0;
-    while ((j < N) && (x != mat[i][j]))
-      j++;
-    if (j != N) {
-      lin = i;
-      i = N;
-    }
-    i++;
-  }
+  while ((i < N) && (x != vet[i])) i++;
 
-  if (i == N)
-    printf("Valor %d nao esta na Matriz\n", x);
-  else {
-    i = lin;
-    printf("Valor %d esta na linha %d e coluna %d da Matriz\n", x, i + 1, j + 1);
-  }
+  if ((i == N) || (x != vet[i]))
+    printf("O valor %d nao esta no vetor!!!!\n", x);
+  else
+    printf("O valor %d esta na posicao %d do vetor!!!!\n", x, i + 1);
+
 
   return 0;
 }
